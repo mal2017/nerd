@@ -18,8 +18,6 @@ __author__ = "Matt Lawlor"
 # SETUP
 shell.executable("/bin/bash")
 
-configfile: "config.yaml"
-
 # DETERMINE REMOTE OR LOCAL RESOURCE
 def determine_resource(path):
     if "gs://" in path:
@@ -37,30 +35,41 @@ def determine_resource(path):
 # pairings
 SAMPLES = list(config["samples"].keys())
 
-"""
-criteria:
-    bidirectional
-    located within a search space
-    unspliced
-    short transcript
-    non-polyadenylated
-"""
-
-
-
-
 rule target:
     input:
-        expand("fastq/{s}.trimmed.fq.gz", s=SAMPLES)
+        expand("fastq/{s}_{e}.trimmed.fq.gz", s=SAMPLES, e=["r1","r2"])
 
 
 rule concat_fqs:
+    input:
+        lambda wc: config["samples"][wc.samp]["fastq"][wc.end]
+    output:
+        temp("fastq/{samp}_{end}.fq.gz")
+    shell:
+        "cat {input} > {output}"
 
+rule trim:
+    input:
+        r1 = "fastq/{samp}_r1.fq.gz",
+        r2 = "fastq/{samp}_r2.fq.gz"
+    output:
+        r1 = "fastq/{samp}_r1.trimmed.fq.gz",
+        r2 = "fastq/{samp}_r2.trimmed.fq.gz",
+        html = "fastq/{samp}_fastp.html",
+        json = "fastq/{samp}_fastp.json"
+    threads:
+        2
+    conda:
+        "envs/fastp.yaml"
+    singularity:
+        "docker://quay.io/biocontainers/fastp:0.20.0--hdbcaa40_0"
+    shell:
+        "fastp --in1 {input.r1} --in2 {input.r2} "
+        "--out1 {output.r1} --out2 {output.r2} "
+        "-j {output.json} -h {output.html} "
+        "-w {threads} -L -R {wildcards.samp}_fastp"
 
 
 
 # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5522910/
 # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4502638/
-rule trim:
-    input:
-        []
