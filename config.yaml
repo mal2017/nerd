@@ -1,0 +1,50 @@
+genome: gs://seq-resources/UCSC-mm10/mm10.fa.gz 
+samples:
+  AD004:
+    fastq:
+      r1:
+        - fastq/AD004_GTCCGC_L003_R1_001.fastq.gz
+        - fastq/AD004_GTCCGC_L004_R1_001.fastq.gz
+      r2:
+        - fastq/AD004_GTCCGC_L003_R2_001.fastq.gz
+        - fastq/AD004_GTCCGC_L004_R2_001.fastq.gz
+  AD005:
+    fastq:
+      r1:
+        - fastq/AD005_GTGAAA_L003_R1_001.fastq.gz
+        - fastq/AD005_GTGAAA_L004_R1_001.fastq.gz
+      r2:
+        - fastq/AD005_GTGAAA_L003_R2_001.fastq.gz
+        - fastq/AD005_GTGAAA_L004_R2_001.fastq.gz
+  AD006:
+    fastq:
+      r1:
+        - fastq/AD006_GTGGCC_L003_R1_001.fastq.gz
+        - fastq/AD006_GTGGCC_L004_R1_001.fastq.gz
+      r2:
+        - fastq/AD006_GTGGCC_L003_R2_001.fastq.gz
+        - fastq/AD006_GTGGCC_L004_R2_001.fastq.gz
+  AD007:
+    fastq:
+      r1:
+        - fastq/AD007_GTTTCG_L003_R1_001.fastq.gz
+        - fastq/AD007_GTTTCG_L004_R1_001.fastq.gz
+      r2:
+        - fastq/AD007_GTTTCG_L003_R2_001.fastq.gz
+        - fastq/AD007_GTTTCG_L004_R2_001.fastq.gz
+  AD008:
+    fastq:
+      r1:
+        - fastq/AD008_CGTACG_L003_R1_001.fastq.gz
+        - fastq/AD008_CGTACG_L004_R1_001.fastq.gz
+      r2:
+        - fastq/AD008_CGTACG_L003_R2_001.fastq.gz
+        - fastq/AD008_CGTACG_L004_R2_001.fastq.gz
+  AD009:
+    fastq:
+      r1:
+        - fastq/AD009_GAGTGG_L003_R1_001.fastq.gz
+        - fastq/AD009_GAGTGG_L004_R1_001.fastq.gz
+      r2:
+        - fastq/AD009_GAGTGG_L003_R2_001.fastq.gz
+        - fastq/AD009_GAGTGG_L004_R2_001.fastq.gz
