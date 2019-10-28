@@ -1,2 +1,5 @@
 work/
 .snakemake
+*bt2
+*.fa
+*.fa.gz

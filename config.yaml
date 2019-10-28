@@ -1,4 +1,16 @@
-genome: gs://seq-resources/UCSC-mm10/mm10.fa.gz 
+GENOM_FA: gs://seq-resources/UCSC-mm10/mm10.fa.gz
+BT2_FILES:
+  - gs://seq-resources/UCSC-mm10/mm10.1.bt2
+  - gs://seq-resources/UCSC-mm10/mm10.2.bt2
+  - gs://seq-resources/UCSC-mm10/mm10.3.bt2
+  - gs://seq-resources/UCSC-mm10/mm10.4.bt2
+  - gs://seq-resources/UCSC-mm10/mm10.rev.1.bt2
+  - gs://seq-resources/UCSC-mm10/mm10.rev.2.bt2
+
+BT2_IDX_PFX: seq-resources/UCSC-mm10/mm10
+TOPHAT2_LIB_TYPE: fr-firststrand
+
+
 samples:
   AD004:
     fastq:
