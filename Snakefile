@@ -77,14 +77,14 @@ rule trim:
 
 def get_fqs_for_aln(x):
     if (len(config["samples"][x]["fastq"].keys()) == 1):
-        return "fastq/{samp}_r1.fq.gz"
+        return "fastq/{samp}_r1.trimmed.fq.gz"
     else:
-        return ["fastq/{samp}_r1.fq.gz", "fastq/{samp}_r2.fq.gz"]
+        return ["fastq/{samp}_r1.trimmed.fq.gz", "fastq/{samp}_r2.trimmed.fq.gz"]
 
 def get_proper_ended_hisat2_call(x):
     fqs = get_fqs_for_aln(x)
     if len(x) == 1:
-        return "-U {r1}".format(r1=fqs[0])
+        return "-U {r1}".format(r1=fqs[0].format(samp=x))
     else:
         return "-1 {r1} -2 {r2}".format(r1=fqs[0].format(samp=x), r2=fqs[1].format(samp=x))
 
@@ -112,7 +112,8 @@ rule hisat2_aln:
         "aln/{samp}.sam"
     params:
         call = lambda wc: get_proper_ended_hisat2_call(wc.samp),
-        lt = config.get("HISAT2_LIB_TYPE","RF")
+        lt = config.get("HISAT2_LIB_TYPE","RF"),
+        conc = config.get("HISAT2_CONCORDANT_FLAG","--rf")
     conda:
         "envs/hisat2.yaml"
     singularity:
@@ -121,7 +122,7 @@ rule hisat2_aln:
         8
     shell:
         "hisat2 -x idx/genome {params.call} -S {output} -p {threads} "
-        "--rna-strandness {params.lt}"
+        "--rna-strandness {params.lt} --no-unal --no-mixed {params.conc}"
 
 # rule tophat2_align:
 #     input:

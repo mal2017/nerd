@@ -1,5 +1,6 @@
 GENOME_FA: gs://seq-resources/UCSC-mm10/mm10.fa.gz
-HISAT2_LIB_TYPE: RF
+HISAT2_LIB_TYPE: FR
+HISAT2_CONCORDANT_FLAG: --fr
 
 samples:
   AD004:
