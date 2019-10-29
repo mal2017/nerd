@@ -35,6 +35,8 @@ def determine_resource(path):
 # pairings
 SAMPLES = list(config["samples"].keys())
 
+ruleorder: trim_se > trim_pe
+
 rule target:
     input:
         expand("fastq/{s}_{e}.trimmed.fq.gz", s=SAMPLES, e=["r1","r2"]),
@@ -42,19 +44,65 @@ rule target:
         expand("aln/{s}.sam", s=SAMPLES)
         #expand("aln/tophat2/{s}", s=SAMPLES)
 
-
 rule concat_fqs:
     input:
-        lambda wc: config["samples"][wc.samp]["fastq"][wc.end]
+        lambda wc: [determine_resource(x) for x in config["samples"][wc.samp]["fastq"][wc.end]]
     output:
         temp("fastq/{samp}_{end}.fq.gz")
     shell:
         "cat {input} > {output}"
 
-rule trim:
+def get_fqs_for_trim(x):
+    if (len(config["samples"][x]["fastq"].keys()) == 1):
+        return ["fastq/{samp}_r1.fq.gz"]
+    else:
+        return ["fastq/{samp}_r1.fq.gz", "fastq/{samp}_r2.fq.gz"]
+
+def get_fqs_for_aln(x):
+    if (len(config["samples"][x]["fastq"].keys()) == 1):
+        return ["fastq/{samp}_r1.trimmed.fq.gz"]
+    else:
+        return ["fastq/{samp}_r1.trimmed.fq.gz", "fastq/{samp}_r2.trimmed.fq.gz"]
+
+def get_proper_ended_fastp_call(x):
+    fqs = get_fqs_for_trim(x)
+    if len(fqs) == 1:
+        return "--in1 {r1}".format(r1=fqs[0].format(samp=x))
+    else:
+        return "--in1 {r1} --in2 {r2}".format(r1=fqs[0].format(samp=x), r2=fqs[1].format(samp=x))
+
+def get_proper_ended_fastp_out(x):
+    fqs = get_fqs_for_aln(x)
+    if len(fqs) == 1:
+        return "--out1 {r1}".format(r1=fqs[0].format(samp=x))
+    else:
+        return "--out1 {r1} --out2 {r2}".format(r1=fqs[0].format(samp=x), r2=fqs[1].format(samp=x))
+
+rule trim_se:
     input:
-        r1 = "fastq/{samp}_r1.fq.gz",
-        r2 = "fastq/{samp}_r2.fq.gz"
+        fq = lambda wc: get_fqs_for_trim(wc.s)
+    output:
+        r1 = "fastq/{samp}_r1.trimmed.fq.gz",
+        html = "fastq/{samp}_fastp.html",
+        json = "fastq/{samp}_fastp.json"
+    threads:
+        2
+    params:
+        call_in = lambda wc: get_proper_ended_fastp_call(wc.samp),
+        call_out = lambda wc: get_proper_ended_fastp_out(wc.samp)
+    conda:
+        "envs/fastp.yaml"
+    singularity:
+        "docker://quay.io/biocontainers/fastp:0.20.0--hdbcaa40_0"
+    shell:
+        "fastp {params.call_in} "
+        "{params.call_out} "
+        "-j {output.json} -h {output.html} "
+        "-w {threads} -L -R {wildcards.samp}_fastp"
+
+rule trim_pe:
+    input:
+        fq = lambda wc: get_fqs_for_trim(wc.samp)
     output:
         r1 = "fastq/{samp}_r1.trimmed.fq.gz",
         r2 = "fastq/{samp}_r2.trimmed.fq.gz",
@@ -62,28 +110,27 @@ rule trim:
         json = "fastq/{samp}_fastp.json"
     threads:
         2
+    params:
+        call_in = lambda wc: get_proper_ended_fastp_call(wc.samp),
+        call_out = lambda wc: get_proper_ended_fastp_out(wc.samp)
     conda:
         "envs/fastp.yaml"
     singularity:
         "docker://quay.io/biocontainers/fastp:0.20.0--hdbcaa40_0"
     shell:
-        "fastp --in1 {input.r1} --in2 {input.r2} "
-        "--out1 {output.r1} --out2 {output.r2} "
+        "fastp {params.call_in} "
+        "{params.call_out} "
         "-j {output.json} -h {output.html} "
         "-w {threads} -L -R {wildcards.samp}_fastp"
+
 
 # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5522910/
 # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4502638/
 
-def get_fqs_for_aln(x):
-    if (len(config["samples"][x]["fastq"].keys()) == 1):
-        return "fastq/{samp}_r1.trimmed.fq.gz"
-    else:
-        return ["fastq/{samp}_r1.trimmed.fq.gz", "fastq/{samp}_r2.trimmed.fq.gz"]
 
 def get_proper_ended_hisat2_call(x):
     fqs = get_fqs_for_aln(x)
-    if len(x) == 1:
+    if len(fqs) == 1:
         return "-U {r1}".format(r1=fqs[0].format(samp=x))
     else:
         return "-1 {r1} -2 {r2}".format(r1=fqs[0].format(samp=x), r2=fqs[1].format(samp=x))
