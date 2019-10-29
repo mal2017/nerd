@@ -119,7 +119,7 @@ rule hisat2_aln:
     singularity:
         "docker://quay.io/biocontainers/hisat2:2.1.0--py36pl5.22.0_0"
     threads:
-        8
+        2
     shell:
         "hisat2 -x idx/genome {params.call} -S {output} -p {threads} "
         "--rna-strandness {params.lt} --no-unal --no-mixed {params.conc}"
