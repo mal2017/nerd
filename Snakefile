@@ -35,11 +35,11 @@ def determine_resource(path):
 # pairings
 SAMPLES = list(config["samples"].keys())
 
-ruleorder: trim_se > trim_pe
+ruleorder:  trim_se > trim_pe
 
 rule target:
     input:
-        expand("fastq/{s}_{e}.trimmed.fq.gz", s=SAMPLES, e=["r1","r2"]),
+        #expand("fastq/{s}_{e}.trimmed.fq.gz", s=SAMPLES, e=["r1","r2"]),
         expand("idx/genome.{i}.ht2", i=[1,2,3,4,5,6,7,8]),
         expand("aln/{s}.sam", s=SAMPLES)
         #expand("aln/tophat2/{s}", s=SAMPLES)
@@ -80,7 +80,7 @@ def get_proper_ended_fastp_out(x):
 
 rule trim_se:
     input:
-        fq = lambda wc: get_fqs_for_trim(wc.s)
+        fq = lambda wc: get_fqs_for_trim(wc.samp),
     output:
         r1 = "fastq/{samp}_r1.trimmed.fq.gz",
         html = "fastq/{samp}_fastp.html",
@@ -153,7 +153,9 @@ rule hisat2_build:
 
 rule hisat2_aln:
     input:
-        fqs = lambda wc: get_fqs_for_aln(wc.samp),
+        #fqs = lambda wc: get_fqs_for_aln(wc.samp),
+        fqs = lambda wc: rules.trim_se.output if (len(config["samples"][wc.samp]["fastq"].keys()) == 1) else rules.trim_pe.output,
+
         idx = rules.hisat2_build.output,
     output:
         "aln/{samp}.sam"
