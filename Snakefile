@@ -207,6 +207,7 @@ rule cufflinks_assemble:
         "assembly/{samp}/isoforms.fpkm_tracking",
         "assembly/{samp}/skipped.gtf",
         "assembly/{samp}/transcripts.gtf",
+        guide=temp("assembly/{samp}/guide.gtf")
     threads:
         2
     conda:
@@ -214,6 +215,7 @@ rule cufflinks_assemble:
     singularity:
         "docker://quay.io/biocontainers/cufflinks:2.2.1--py36_2"
     shell:
+        "gunzip -c {input.gtf} > {output.guide} || cp {input.gtf} {output.guide}; "
         "cufflinks -g {input.gtf} -o assembly/{wildcards.samp} -p {threads} {input.bam}"
 
 # https://www.biostars.org/p/271203/
