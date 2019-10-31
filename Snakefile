@@ -40,9 +40,10 @@ ruleorder:  trim_se > trim_pe
 rule target:
     input:
         #expand("fastq/{s}_{e}.trimmed.fq.gz", s=SAMPLES, e=["r1","r2"]),
-        expand("idx/genome.{i}.ht2", i=[1,2,3,4,5,6,7,8]),
-        expand("aln/{s}.sam", s=SAMPLES)
-        #expand("aln/tophat2/{s}", s=SAMPLES)
+        #expand("idx/genome.{i}.ht2", i=[1,2,3,4,5,6,7,8]),
+        #expand("aln/{s}.srt.bam", s=SAMPLES),
+        #expand("aln/{s}.srt.bam.bai", s=SAMPLES),
+        expand("assembly/{s}/transcripts.gtf", s=SAMPLES)
 
 rule concat_fqs:
     input:
@@ -158,7 +159,7 @@ rule hisat2_aln:
 
         idx = rules.hisat2_build.output,
     output:
-        "aln/{samp}.sam"
+        temp("aln/{samp}.sam")
     params:
         call = lambda wc: get_proper_ended_hisat2_call(wc.samp),
         lt = config.get("HISAT2_LIB_TYPE","RF"),
@@ -171,27 +172,48 @@ rule hisat2_aln:
         2
     shell:
         "hisat2 -x idx/genome {params.call} -S {output} -p {threads} "
+        "--dta-cufflinks "
         "--rna-strandness {params.lt} --no-unal --no-mixed {params.conc}"
 
-# rule tophat2_align:
-#     input:
-#         fqs = lambda wc: get_fqs_for_aln(wc.samp),
-#         bt2_idx_paths = [determine_resource(y) for y in config.get("BT2_FILES",None)]
-#     output:
-#         directory("aln/tophat2/{samp}")
-#     singularity:
-#         "docker://quay.io/biocontainers/tophat:2.1.1--py35_0"
-#     conda:
-#         "envs/tophat2.yaml"
-#     params:
-#         call = lambda wc: get_proper_ended_tophat2_call(wc.samp),
-#         idx_pfx = config.get("BT2_IDX_PFX",None),
-#         lt = config.get("TOPHAT2_LIB_TYPE","fr-firststrand")
-#     threads:
-#         4
-#     shell:
-#         "tophat2 -p {threads} "
-#         "--library-type {params.lt} "
-#         "--no-discordant --no-mixed "
-#         "--b2-very-fast -o {output} "
-#         "{params.idx_pfx} {params.call}"
+rule prep_alignments:
+    input:
+        rules.hisat2_aln.output
+    output:
+        "aln/{samp}.srt.bam"
+    threads:
+        2
+    shell:
+        "samtools sort -o {output} -@ {threads} {input}"
+
+
+rule index_bam:
+    input:
+        "{file}.srt.bam"
+    output:
+        "{file}.srt.bam.bai"
+    threads:
+        2
+    conda:
+        "envs/samtools19.yaml"
+    shell:
+        "samtools index -@ {threads} {input}"
+rule cufflinks_assemble:
+    input:
+        bam="aln/{samp}.srt.bam",
+        bai="aln/{samp}.srt.bam.bai",
+        gtf=determine_resource(config.get("GENOME_GTF",None))
+    output:
+        "assembly/{samp}/genes.fpkm_tracking",
+        "assembly/{samp}/isoforms.fpkm_tracking",
+        "assembly/{samp}/skipped.gtf",
+        "assembly/{samp}/transcripts.gtf",
+    threads:
+        2
+    conda:
+        "envs/cufflinks.yaml"
+    singularity:
+        "docker://quay.io/biocontainers/cufflinks:2.2.1--py36_2"
+    shell:
+        "cufflinks -g {input.gtf} -o assembly/{wildcards.samp} -p {threads} {input.bam}"
+
+# https://www.biostars.org/p/271203/

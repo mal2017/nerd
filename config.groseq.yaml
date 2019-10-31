@@ -7,155 +7,155 @@ GENOME_GTF: ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_30/g
 TXOME_IS_GENCODE: True
 TXOME_FA: ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_30/gencode.v30.pc_transcripts.fa.gz
 samples:
-  # CUTTL1_00h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 00h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349479/SRR7349479.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349480/SRR7349480.fastq.gz
-  # CUTTL1_00h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 00h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349481/SRR7349481.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349482/SRR7349482.fastq.gz
-  #
-  # CUTTL1_01h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 01h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349483/SRR7349483.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349484/SRR7349484.fastq.gz
-  # CUTTL1_01h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 01h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349485/SRR7349485.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349486/SRR7349486.fastq.gz
-  #
-  # CUTTL1_02h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 02h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/007/SRR7349487/SRR7349487.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/008/SRR7349488/SRR7349488.fastq.gz
-  #
-  # CUTTL1_02h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 02h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349489/SRR7349489.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349490/SRR7349490.fastq.gz
-  #
-  # CUTTL1_03h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 03h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349491/SRR7349491.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349492/SRR7349492.fastq.gz
-  #
-  # CUTTL1_03h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 03h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349493/SRR7349493.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349494/SRR7349494.fastq.gz
-  #
-  # CUTTL1_04h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 04h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349495/SRR7349495.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349496/SRR7349496.fastq.gz
-  #
-  # CUTTL1_04h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 04h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/007/SRR7349497/SRR7349497.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/008/SRR7349498/SRR7349498.fastq.gz
-  #
-  # CUTTL1_05h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 05h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349499/SRR7349499.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349500/SRR7349500.fastq.gz
-  #
-  # CUTTL1_05h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 05h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349501/SRR7349501.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349502/SRR7349502.fastq.gz
-  #
-  # CUTTL1_06h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 06h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349503/SRR7349503.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349504/SRR7349504.fastq.gz
-  #
-  # CUTTL1_06h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 06h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349505/SRR7349505.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349506/SRR7349506.fastq.gz
-  #
-  # CUTTL1_08h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 08h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/007/SRR7349507/SRR7349507.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/008/SRR7349508/SRR7349508.fastq.gz
-  #
-  # CUTTL1_08h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 08h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349509/SRR7349509.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349510/SRR7349510.fastq.gz
-  #
-  # CUTTL1_10h_01: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 10h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349511/SRR7349511.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349512/SRR7349512.fastq.gz
-  #
-  # CUTTL1_10h_02: # your own assigned name for this sample
-  #   condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
-  #     - 10h
-  #   fastq: # uri to fastq or fastq.gz.
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349513/SRR7349513.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349514/SRR7349514.fastq.gz
-  #
-  # CUTTL1_DMSO_01:
-  #   condition:
-  #     - DMSO
-  #   fastq:
-  #     r1:
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349475/SRR7349475.fastq.gz
-  #       - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349476/SRR7349476.fastq.gz
+  CUTTL1_00h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 00h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349479/SRR7349479.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349480/SRR7349480.fastq.gz
+  CUTTL1_00h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 00h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349481/SRR7349481.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349482/SRR7349482.fastq.gz
+
+  CUTTL1_01h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 01h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349483/SRR7349483.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349484/SRR7349484.fastq.gz
+  CUTTL1_01h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 01h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349485/SRR7349485.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349486/SRR7349486.fastq.gz
+
+  CUTTL1_02h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 02h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/007/SRR7349487/SRR7349487.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/008/SRR7349488/SRR7349488.fastq.gz
+
+  CUTTL1_02h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 02h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349489/SRR7349489.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349490/SRR7349490.fastq.gz
+
+  CUTTL1_03h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 03h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349491/SRR7349491.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349492/SRR7349492.fastq.gz
+
+  CUTTL1_03h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 03h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349493/SRR7349493.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349494/SRR7349494.fastq.gz
+
+  CUTTL1_04h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 04h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349495/SRR7349495.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349496/SRR7349496.fastq.gz
+
+  CUTTL1_04h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 04h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/007/SRR7349497/SRR7349497.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/008/SRR7349498/SRR7349498.fastq.gz
+
+  CUTTL1_05h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 05h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349499/SRR7349499.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349500/SRR7349500.fastq.gz
+
+  CUTTL1_05h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 05h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349501/SRR7349501.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349502/SRR7349502.fastq.gz
+
+  CUTTL1_06h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 06h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349503/SRR7349503.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349504/SRR7349504.fastq.gz
+
+  CUTTL1_06h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 06h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349505/SRR7349505.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349506/SRR7349506.fastq.gz
+
+  CUTTL1_08h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 08h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/007/SRR7349507/SRR7349507.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/008/SRR7349508/SRR7349508.fastq.gz
+
+  CUTTL1_08h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 08h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/009/SRR7349509/SRR7349509.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/000/SRR7349510/SRR7349510.fastq.gz
+
+  CUTTL1_10h_01: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 10h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/001/SRR7349511/SRR7349511.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/002/SRR7349512/SRR7349512.fastq.gz
+
+  CUTTL1_10h_02: # your own assigned name for this sample
+    condition: # list of covariates. Order of covariate must remain conserved across all samples, and the last one should be the condition of interest
+      - 10h
+    fastq: # uri to fastq or fastq.gz.
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/003/SRR7349513/SRR7349513.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/004/SRR7349514/SRR7349514.fastq.gz
+
+  CUTTL1_DMSO_01:
+    condition:
+      - DMSO
+    fastq:
+      r1:
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/005/SRR7349475/SRR7349475.fastq.gz
+        - ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR734/006/SRR7349476/SRR7349476.fastq.gz
 
   CUTTL1_DMSO_02:
     condition:

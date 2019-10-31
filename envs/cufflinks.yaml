@@ -1,0 +1,6 @@
+channels:
+- conda-forge
+- bioconda
+- defaults
+dependencies:
+- cufflinks=2.2.1

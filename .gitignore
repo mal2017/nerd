@@ -4,3 +4,7 @@ work*/
 *.fa
 *.fa.gz
 *ht2
+*bam
+*sam
+*ai
+test/
