@@ -215,7 +215,8 @@ rule cufflinks_assemble:
     singularity:
         "docker://quay.io/biocontainers/cufflinks:2.2.1--py36_2"
     shell:
+        "mkdir -p assembly/{wildcards.samp}; "
         "gunzip -c {input.gtf} > {output.guide} || cp {input.gtf} {output.guide}; "
-        "cufflinks -g {input.gtf} -o assembly/{wildcards.samp} -p {threads} {input.bam}"
+        "cufflinks -g {output.guide} -o assembly/{wildcards.samp} -p {threads} {input.bam}"
 
 # https://www.biostars.org/p/271203/
