@@ -41,9 +41,10 @@ rule target:
     input:
         #expand("fastq/{s}_{e}.trimmed.fq.gz", s=SAMPLES, e=["r1","r2"]),
         #expand("idx/genome.{i}.ht2", i=[1,2,3,4,5,6,7,8]),
-        #expand("aln/{s}.srt.bam", s=SAMPLES),
-        #expand("aln/{s}.srt.bam.bai", s=SAMPLES),
-        expand("assembly/{s}/transcripts.gtf", s=SAMPLES)
+        expand("aln/{s}.srt.bam", s=SAMPLES),
+        expand("aln/{s}.srt.bam.bai", s=SAMPLES),
+        expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
+        "assembly/assembly_GTF_list.txt"
 
 rule concat_fqs:
     input:
@@ -169,7 +170,7 @@ rule hisat2_aln:
     singularity:
         "docker://quay.io/biocontainers/hisat2:2.1.0--py36pl5.22.0_0"
     threads:
-        2
+        4
     shell:
         "hisat2 -x idx/genome {params.call} -S {output} -p {threads} "
         "--dta-cufflinks "
@@ -197,6 +198,7 @@ rule index_bam:
         "envs/samtools19.yaml"
     shell:
         "samtools index -@ {threads} {input}"
+
 rule cufflinks_assemble:
     input:
         bam="aln/{samp}.srt.bam",
@@ -209,7 +211,7 @@ rule cufflinks_assemble:
         "assembly/{samp}/transcripts.gtf",
         guide=temp("assembly/{samp}/guide.gtf")
     threads:
-        2
+        4
     conda:
         "envs/cufflinks.yaml"
     singularity:
@@ -218,5 +220,29 @@ rule cufflinks_assemble:
         "mkdir -p assembly/{wildcards.samp}; "
         "gunzip -c {input.gtf} > {output.guide} || cp {input.gtf} {output.guide}; "
         "cufflinks -g {output.guide} -o assembly/{wildcards.samp} -p {threads} {input.bam}"
+
+rule cuffmerge:
+    input:
+        gtfs = expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
+        refgtf=determine_resource(config.get("GENOME_GTF",None)),
+        refsequence = determine_resource(config.get("GENOME_FA",None))
+    output:
+        gtflist = "assembly/assembly_GTF_list.txt",
+        mrg = "assembly/merged.gtf"
+    conda:
+        "envs/cufflinks.yaml"
+    singularity:
+        "docker://quay.io/biocontainers/cufflinks:2.2.1--py36_2"
+    shell:
+        """
+        echo {input.gtfs} > {output.gtflist}
+        cuffmerge -o assembly/ \
+            --ref-gtf {input.refgtf} \
+            --ref-sequence {input.refsequence} \
+            {output.gtflist}
+        """
+
+
+
 
 # https://www.biostars.org/p/271203/
