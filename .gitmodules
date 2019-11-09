@@ -1,0 +1,3 @@
+[submodule "incl/rp2"]
+	path = incl/rp2
+	url = https://github.com/mal2017/rp2

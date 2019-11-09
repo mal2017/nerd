@@ -2,7 +2,7 @@ project: TOTAL_RNA_MS # your project name here
 CONTROL_LEVEL: 00hr # control condition
 GENOME_FA: gs://seq-resources/UCSC-mm10/mm10.fa.gz
 GENOME_GTF: ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.annotation.gtf.gz
-HISAT2_LIB_TYPE: FR
+HISAT2_LIB_TYPE: RF
 HISAT2_CONCORDANT_FLAG: --fr
 
 samples:

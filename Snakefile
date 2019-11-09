@@ -44,7 +44,8 @@ rule target:
         expand("aln/{s}.srt.bam", s=SAMPLES),
         expand("aln/{s}.srt.bam.bai", s=SAMPLES),
         expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
-        "assembly/assembly_GTF_list.txt"
+        "assembly/assembly_GTF_list.txt",
+        "assembly/merged.gtf"
 
 rule concat_fqs:
     input:
@@ -221,28 +222,50 @@ rule cufflinks_assemble:
         "gunzip -c {input.gtf} > {output.guide} || cp {input.gtf} {output.guide}; "
         "cufflinks -g {output.guide} -o assembly/{wildcards.samp} -p {threads} {input.bam}"
 
-rule cuffmerge:
+rule make_gtf_list:
     input:
         gtfs = expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
-        refgtf=determine_resource(config.get("GENOME_GTF",None)),
-        refsequence = determine_resource(config.get("GENOME_FA",None))
     output:
-        gtflist = "assembly/assembly_GTF_list.txt",
-        mrg = "assembly/merged.gtf"
+        gtflist =temp("assembly/assembly_GTF_list.txt"),
+    shell:
+        """
+        echo {input.gtfs} | tr [:space:] "\n" > {output.gtflist}
+        """
+
+rule cuffmerge:
+    input:
+        refgtf=determine_resource(config.get("GENOME_GTF",None)),
+        refsequence = determine_resource(config.get("GENOME_FA",None)),
+        gtflist ="assembly/assembly_GTF_list.txt",
+    output:
+        mrg = "assembly/merged.gtf",
+        #fa = "assembly/merged.fa",
+        lgs = directory("assembly/logs"),
+        guide=temp("assembly/guide.gtf"),
+        refsequence = temp("assembly/refsequence.fa"),
+        fai= temp("assembly/refsequence.fa.fai")
+    threads:
+        6
     conda:
         "envs/cufflinks.yaml"
     singularity:
         "docker://quay.io/biocontainers/cufflinks:2.2.1--py36_2"
     shell:
         """
-        echo {input.gtfs} > {output.gtflist}
+        gunzip -c {input.refgtf} > {output.guide} || cp {input.refgtf} {output.guide};
+        gunzip -c {input.refsequence} > {output.refsequence} || cp {input.refsequence} {output.refsequence};
         cuffmerge -o assembly/ \
-            --ref-gtf {input.refgtf} \
-            --ref-sequence {input.refsequence} \
-            {output.gtflist}
+            -p {threads} \
+            --ref-gtf {output.guide} \
+            --ref-sequence {output.refsequence} \
+            {input.gtflist}
         """
 
+config.update(analysis = {"txome": {"fasta": "assembly/merged.fa"}, "salmon_config": {"bootstraps": 50}})
 
+
+#include:
+#    "incl/rp2/Snakefile"
 
 
 # https://www.biostars.org/p/271203/
