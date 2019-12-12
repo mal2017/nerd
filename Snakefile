@@ -44,9 +44,9 @@ rule target:
         expand("aln/{s}.srt.bam", s=SAMPLES),
         expand("aln/{s}.srt.bam.bai", s=SAMPLES),
         expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
-        "assembly/assembly_GTF_list.txt",
         "assembly/merged.gtf",
         expand("tracks/{s}.{d}.bedgraph.gz", s=SAMPLES, d=["forward","reverse"]),
+        expand("tracks/{s}.{d}.bw", s=SAMPLES, d=["forward","reverse"]),
 
 
 rule concat_fqs:
@@ -273,12 +273,12 @@ rule plus_strand_bdg:
     output:
         "tracks/{samp}.forward.bedgraph.gz",
     params:
-        paired = "-pc -du" if config.get("IS_PE",True) else "-du"
+        paired = "-du -trackline" if config.get("IS_PE",True) else "-trackline"
     singularity:
         "docker://quay.io/biocontainers/bedtools:2.29.0--hc088bd4_3"
     shell:
         """
-        bedtools genomecov -split -trackline {params.paired} -bg -strand + -ibam {input[0]} | \
+        bedtools genomecov -split {params.paired} -bg -strand + -ibam {input[0]} | \
         gzip > {output}
         """
 
@@ -296,6 +296,28 @@ rule minus_strand_bdg:
         """
         bedtools genomecov -split -trackline {params.paired} -bg -strand - -ibam {input[0]} | \
         gzip > {output}
+        """
+
+rule stranded_bw:
+    input:
+        "aln/{samp}.srt.bam",
+        "aln/{samp}.srt.bam.bai",
+    output:
+        "tracks/{samp}.{direction}.bw",
+    singularity:
+        "docker://quay.io/biocontainers/deeptools:3.3.1--py_0"
+    conda:
+        "envs/deeptools.yaml"
+    threads:
+        6
+    shell:
+        """
+        bamCoverage -b {input[0]} -o {output} \
+            -bs 50 \
+            --smoothLength 150 \
+            --normalizeUsing RPKM \
+            -p {threads} \
+            --filterRNAstrand {wildcards.direction}
         """
 
 #include:
