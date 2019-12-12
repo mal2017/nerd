@@ -45,7 +45,9 @@ rule target:
         expand("aln/{s}.srt.bam.bai", s=SAMPLES),
         expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
         "assembly/assembly_GTF_list.txt",
-        "assembly/merged.gtf"
+        "assembly/merged.gtf",
+        expand("tracks/{s}.{d}.bedgraph.gz", s=SAMPLES, d=["forward","reverse"]),
+
 
 rule concat_fqs:
     input:
@@ -242,8 +244,8 @@ rule cuffmerge:
         #fa = "assembly/merged.fa",
         lgs = directory("assembly/logs"),
         guide=temp("assembly/guide.gtf"),
-        refsequence = temp("assembly/refsequence.fa"),
-        fai= temp("assembly/refsequence.fa.fai")
+        refsequence = "assembly/refsequence.fa",
+        fai= "assembly/refsequence.fa.fai"
     threads:
         6
     conda:
@@ -263,6 +265,38 @@ rule cuffmerge:
 
 config.update(analysis = {"txome": {"fasta": "assembly/merged.fa"}, "salmon_config": {"bootstraps": 50}})
 
+
+rule plus_strand_bdg:
+    input:
+        "aln/{samp}.srt.bam",
+        "aln/{samp}.srt.bam.bai"
+    output:
+        "tracks/{samp}.forward.bedgraph.gz",
+    params:
+        paired = "-pc -du" if config.get("IS_PE",True) else "-du"
+    singularity:
+        "docker://quay.io/biocontainers/bedtools:2.29.0--hc088bd4_3"
+    shell:
+        """
+        bedtools genomecov -split -trackline {params.paired} -bg -strand + -ibam {input[0]} | \
+        gzip > {output}
+        """
+
+rule minus_strand_bdg:
+    input:
+        "aln/{samp}.srt.bam",
+        "aln/{samp}.srt.bam.bai",
+    output:
+        "tracks/{samp}.reverse.bedgraph.gz",
+    params:
+        paired = "-pc -du" if config.get("IS_PE",True) else "-du"
+    singularity:
+        "docker://quay.io/biocontainers/bedtools:2.29.0--hc088bd4_3"
+    shell:
+        """
+        bedtools genomecov -split -trackline {params.paired} -bg -strand - -ibam {input[0]} | \
+        gzip > {output}
+        """
 
 #include:
 #    "incl/rp2/Snakefile"
