@@ -43,9 +43,9 @@ rule target:
         #expand("idx/genome.{i}.ht2", i=[1,2,3,4,5,6,7,8]),
         expand("aln/{s}.srt.bam", s=SAMPLES),
         expand("aln/{s}.srt.bam.bai", s=SAMPLES),
-        expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
-        "assembly/merged.gtf",
-        expand("tracks/{s}.{d}.bedgraph.gz", s=SAMPLES, d=["forward","reverse"]),
+        #expand("assembly/{s}/transcripts.gtf", s=SAMPLES),
+        #"assembly/merged.gtf",
+        #expand("tracks/{s}.{d}.bedgraph.gz", s=SAMPLES, d=["forward","reverse"]),
         expand("tracks/{s}.{d}.bw", s=SAMPLES, d=["forward","reverse"]),
 
 
@@ -166,8 +166,8 @@ rule hisat2_aln:
         temp("aln/{samp}.sam")
     params:
         call = lambda wc: get_proper_ended_hisat2_call(wc.samp),
-        lt = config.get("HISAT2_LIB_TYPE","RF"),
-        conc = config.get("HISAT2_CONCORDANT_FLAG","--rf")
+        lt = config.get("HISAT2_LIB_TYPE",""),
+        conc = config.get("HISAT2_CONCORDANT_FLAG","--fr")
     conda:
         "envs/hisat2.yaml"
     singularity:
@@ -177,7 +177,7 @@ rule hisat2_aln:
     shell:
         "hisat2 -x idx/genome {params.call} -S {output} -p {threads} "
         "--dta-cufflinks "
-        "--rna-strandness {params.lt} --no-unal --no-mixed {params.conc}"
+        "--no-unal --no-mixed {params.conc} {params.lt}"
 
 rule prep_alignments:
     input:
@@ -309,7 +309,7 @@ rule stranded_bw:
     conda:
         "envs/deeptools.yaml"
     threads:
-        6
+        2
     shell:
         """
         bamCoverage -b {input[0]} -o {output} \
