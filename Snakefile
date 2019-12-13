@@ -167,7 +167,7 @@ rule hisat2_aln:
     params:
         call = lambda wc: get_proper_ended_hisat2_call(wc.samp),
         lt = config.get("HISAT2_LIB_TYPE",""),
-        conc = config.get("HISAT2_CONCORDANT_FLAG","--fr")
+        conc = config.get("HISAT2_CONCORDANT_FLAG","")
     conda:
         "envs/hisat2.yaml"
     singularity:

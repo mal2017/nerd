@@ -4,7 +4,7 @@ IS_PE: True
 GENOME_FA: gs://seq-resources/UCSC-mm10/mm10.fa.gz
 GENOME_GTF: ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.annotation.gtf.gz
 HISAT2_LIB_TYPE: --rna-strandness RF
-HISAT2_CONCORDANT_FLAG: --fr
+#HISAT2_CONCORDANT_FLAG: --fr
 
 samples:
   AD004:
